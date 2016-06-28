@@ -16,18 +16,26 @@ class Repository
 
     public function getMenu($alias)
     {
-        return $this->cache->remember($this->getCacheKey($alias), 10, function() use ($alias) {
-            $menu = Menu::with(['items.entity.template', 'items.entity.paths' => function($query) {
-                $query->whereNull('canonical_id');
-            }])->whereAlias($alias)->first();
+        return $this->cache->remember($this->getCacheKey($alias), 60, function() use ($alias) {
+
+            $menu = Menu::with([
+                'items' => function($query) {
+                    $query->orderBy('_lft');
+                },
+                'items.entity.paths' => function($query) {
+                    $query->whereNull('canonical_id');
+                },
+                'items.entity.template',
+            ])->whereAlias($alias)->first();
+
+            if (! $menu) {
+                return collect();
+            }
 
             $items = $menu->items->map(function($item) {
                 $menuItem = $item->entity;
 
-                $item->name = $menuItem->name;
-                $item->url = url($menuItem->canonical_path);
-
-                if ($item->include_children) {
+                if ($menuItem && $item->include_children) {
                     $query = $menuItem->descendants()->with('template')->withCanonicalPath();
 
                     if ($item->max_depth) {
@@ -43,10 +51,16 @@ class Repository
                 }
 
                 return $item;
-            })/*->toTree()*/;
+            })->toTree();
 
             return $items;
         });
+    }
+
+    public function clearCache($alias)
+    {
+        $this->cache->forget($this->getCacheKey($menuAlias));
+        $this->getMenu($menuAlias);
     }
 
     protected function getCacheKey($alias)

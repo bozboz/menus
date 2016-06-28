@@ -6,6 +6,7 @@ use Bozboz\Admin\Http\Controllers\ModelAdminController;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
 use Bozboz\Admin\Reports\Actions\Presenters\Urls\Route;
+use Bozboz\Admin\Reports\NestedReport;
 use Bozboz\Menus\Items\ItemDecorator;
 use Bozboz\Menus\Menu;
 use Illuminate\Support\Facades\Redirect;
@@ -18,6 +19,11 @@ class ItemController extends ModelAdminController
     public function __construct(ItemDecorator $decorator)
     {
         parent::__construct($decorator);
+    }
+
+    protected function getListingReport()
+    {
+        return new NestedReport($this->decorator);
     }
 
     public function indexFormMenu(Menu $menu)

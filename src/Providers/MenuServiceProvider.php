@@ -3,6 +3,7 @@
 namespace Bozboz\Menus\Providers;
 
 use Bozboz\Menus\Http\Composers\Menu;
+use Bozboz\Menus\Items\Item;
 use Bozboz\Menus\Repository;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -39,6 +40,15 @@ class MenuServiceProvider extends ServiceProvider
 
         Blade::directive('menu', function($expression) {
             return "<?php echo menu($expression); ?>";
+        });
+
+        Item::saved(function($item) {
+            $menuAlias = $item->menu->alias;
+            $this->app['menus']->clearCache($menuAlias);
+        });
+        Item::deleted(function($item) {
+            $menuAlias = $item->menu->alias;
+            $this->app['menus']->clearCache($menuAlias);
         });
     }
 

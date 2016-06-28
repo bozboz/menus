@@ -3,10 +3,13 @@
 namespace Bozboz\Menus\Items;
 
 use Bozboz\Admin\Base\Model;
+use Bozboz\Admin\Base\Sorting\NestedSortableTrait;
+use Bozboz\Admin\Base\Sorting\Sortable;
 use Bozboz\Jam\Entities\Entity;
 use Bozboz\Menus\Menu;
+use Kalnoy\Nestedset\NodeTrait;
 
-class Item extends Model
+class Item extends Model implements Sortable
 {
     protected $table = 'menu_items';
 
@@ -27,6 +30,13 @@ class Item extends Model
         'url',
         'max_depth',
     ];
+
+    use NodeTrait, NestedSortableTrait;
+
+    public function sortBy()
+    {
+        return '_lft';
+    }
 
     public function menu()
     {

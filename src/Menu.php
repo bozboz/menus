@@ -10,6 +10,7 @@ class Menu extends Model
 {
     protected $fillable = [
         'name',
+        'alias',
     ];
 
     use DynamicSlugTrait;
