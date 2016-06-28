@@ -36,7 +36,7 @@ class MenuController extends ModelAdminController
                     'fa fa-list',
                     ['class' => 'btn-default']
                 ),
-                new IsValid([$this, 'canView'])
+                new IsValid([$this->items, 'canView'])
             ),
         ], parent::getRowActions());
     }

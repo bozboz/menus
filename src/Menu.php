@@ -4,6 +4,7 @@ namespace Bozboz\Menus;
 
 use Bozboz\Admin\Base\DynamicSlugTrait;
 use Bozboz\Admin\Base\Model;
+use Bozboz\Menus\Items\Item;
 
 class Menu extends Model
 {
@@ -20,6 +21,6 @@ class Menu extends Model
 
     public function items()
     {
-        // return $this->hasMany(Items::class);
+        return $this->hasMany(Item::class);
     }
 }

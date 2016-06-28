@@ -3,6 +3,9 @@
 namespace Bozboz\Menus\Http\Controllers\Admin;
 
 use Bozboz\Admin\Http\Controllers\ModelAdminController;
+use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
+use Bozboz\Admin\Reports\Actions\Presenters\Link;
+use Bozboz\Admin\Reports\Actions\Presenters\Urls\Route;
 use Bozboz\Menus\Items\ItemDecorator;
 use Bozboz\Menus\Menu;
 use Illuminate\Support\Facades\Redirect;
@@ -49,7 +52,18 @@ class ItemController extends ModelAdminController
         return [
             $this->actions->create(
                 [$this->getActionName('createForMenu'), $this->menu->id],
-                [$this, 'canCreate']
+                [$this, 'canCreate'],
+                'New',
+                ['class' => 'space-left pull-right btn-success']
+            ),
+            $this->actions->custom(
+                new Link(
+                    new Route('admin.menus.index'),
+                    'Back to menus',
+                    'fa fa-list',
+                    ['class' => 'pull-right btn-default']
+                ),
+                new IsValid([$this, 'canView'])
             ),
         ];
     }

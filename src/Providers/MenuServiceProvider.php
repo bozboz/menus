@@ -2,13 +2,18 @@
 
 namespace Bozboz\Menus\Providers;
 
+use Bozboz\Menus\Http\Composers\Menu;
+use Bozboz\Menus\Repository;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class MenuServiceProvider extends ServiceProvider
 {
     public function register()
     {
-
+        $this->app->bind('menus', function ($app) {
+            return $this->app[Repository::class];
+        });
     }
 
     public function boot()
@@ -21,17 +26,20 @@ class MenuServiceProvider extends ServiceProvider
             "$packageRoot/database/migrations" => database_path('migrations')
         ]);
 
-        // $this->registerEntityTypes();
-
         $this->buildAdminMenu();
 
         $permissions = $this->app['permission.handler'];
 
         require "$packageRoot/permissions.php";
+        require "$packageRoot/helpers.php";
 
         if (! $this->app->routesAreCached()) {
             require "$packageRoot/src/Http/routes.php";
         }
+
+        Blade::directive('menu', function($expression) {
+            return "<?php echo menu($expression); ?>";
+        });
     }
 
     protected function buildAdminMenu()
