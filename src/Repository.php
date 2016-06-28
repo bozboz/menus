@@ -25,7 +25,7 @@ class Repository
                 $menuItem = $item->entity;
 
                 $item->name = $menuItem->name;
-                $item->path = $menuItem->canonical_path;
+                $item->url = url($menuItem->canonical_path);
 
                 if ($item->include_children) {
                     $query = $menuItem->descendants()->with('template')->withCanonicalPath();
@@ -37,7 +37,7 @@ class Repository
                     $item->children = $query->get()->filter(function($item) {
                         return $item->template->type()->isVisible();
                     })->transform(function($item) {
-                        $item->path = $item->canonical_path;
+                        $item->url = url($item->canonical_path);
                         return $item;
                     })->toTree();
                 }
