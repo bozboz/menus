@@ -16,6 +16,8 @@ class Repository
 
     public function getMenu($alias)
     {
+        return $this->cache->remember($this->getCacheKey($alias), 60, function() use ($alias) {
+
             $menu = Menu::with([
                 'items' => function($query) {
                     $query->orderBy('_lft');
@@ -51,8 +53,6 @@ class Repository
             })->toTree();
 
             return $items;
-        return $this->cache->remember($this->getCacheKey($alias), 60, function() use ($alias) {
-
         });
     }
 
