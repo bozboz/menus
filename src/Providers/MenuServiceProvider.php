@@ -39,16 +39,20 @@ class MenuServiceProvider extends ServiceProvider
         }
 
         Blade::directive('menu', function($expression) {
-            return "<?php echo menu($expression); ?>";
+            return "<?php echo menu{$expression}; ?>";
         });
 
         Item::saved(function($item) {
-            $menuAlias = $item->menu->alias;
-            $this->app['menus']->clearCache($menuAlias);
+            if ($item->menu) {
+                $menuAlias = $item->menu->alias;
+                $this->app['menus']->clearCache($menuAlias);
+            }
         });
         Item::deleted(function($item) {
-            $menuAlias = $item->menu->alias;
-            $this->app['menus']->clearCache($menuAlias);
+            if ($item->menu) {
+                $menuAlias = $item->menu->alias;
+                $this->app['menus']->clearCache($menuAlias);
+            }
         });
     }
 

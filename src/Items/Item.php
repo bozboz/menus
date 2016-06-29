@@ -18,6 +18,7 @@ class Item extends Model implements Sortable
         'entity_id',
         'name',
         'url',
+        'slug',
         'override_name',
         'override_url',
         'include_children',

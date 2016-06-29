@@ -17,6 +17,11 @@ class Menu extends Model
 
     public function getSlugSourceField()
     {
+        return 'name';
+    }
+
+    protected function getSlugField()
+    {
         return 'alias';
     }
 

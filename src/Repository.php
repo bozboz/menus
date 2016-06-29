@@ -16,8 +16,6 @@ class Repository
 
     public function getMenu($alias)
     {
-        return $this->cache->remember($this->getCacheKey($alias), 60, function() use ($alias) {
-
             $menu = Menu::with([
                 'items' => function($query) {
                     $query->orderBy('_lft');
@@ -36,12 +34,11 @@ class Repository
                 $menuItem = $item->entity;
 
                 if ($menuItem && $item->include_children) {
-                    $query = $menuItem->descendants()->with('template')->withCanonicalPath();
+                    $query = $menuItem->descendants()->active()->with('template')->withCanonicalPath();
 
                     if ($item->max_depth) {
                         $query->withDepth()->having('depth', '<=', $item->max_depth);
                     }
-
                     $item->children = $query->get()->filter(function($item) {
                         return $item->template->type()->isVisible();
                     })->transform(function($item) {
@@ -54,10 +51,12 @@ class Repository
             })->toTree();
 
             return $items;
+        return $this->cache->remember($this->getCacheKey($alias), 60, function() use ($alias) {
+
         });
     }
 
-    public function clearCache($alias)
+    public function clearCache($menuAlias)
     {
         $this->cache->forget($this->getCacheKey($menuAlias));
         $this->getMenu($menuAlias);

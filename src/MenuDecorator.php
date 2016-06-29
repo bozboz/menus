@@ -4,6 +4,7 @@ namespace Bozboz\Menus;
 
 use Bozboz\Admin\Base\ModelAdminDecorator;
 use Bozboz\Admin\Fields\TextField;
+use Illuminate\Database\Eloquent\Builder;
 
 class MenuDecorator extends ModelAdminDecorator
 {
@@ -23,5 +24,10 @@ class MenuDecorator extends ModelAdminDecorator
             new TextField('name'),
             new TextField('alias'),
         ];
+    }
+
+    public function modifyListingQuery(Builder $query)
+    {
+        $query->orderBy('name');
     }
 }
