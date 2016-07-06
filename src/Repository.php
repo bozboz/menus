@@ -36,7 +36,7 @@ class Repository
                 $menuItem = $item->entity;
 
                 if ($menuItem && $item->include_children) {
-                    $query = $menuItem->descendants()->active()->with('template')->withCanonicalPath()->ordered();
+                    $query = $menuItem->descendants()->active()->with('template')->withCanonicalPath();
 
                     if ($item->max_depth) {
                         $query->withDepth()->having('depth', '<=', $item->max_depth);
@@ -46,7 +46,11 @@ class Repository
                     })->transform(function($item) {
                         $item->url = url($item->canonical_path);
                         return $item;
-                    })->toTree();
+                    });
+
+                    $sortBy = $menuItem->template->type()->getEntity()->sortBy();
+
+                    $item->children = $item->children->sortBy($sortBy)->toTree();
                 }
 
                 return $item;
