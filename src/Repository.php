@@ -36,7 +36,7 @@ class Repository
                 $menuItem = $item->entity;
 
                 if ($menuItem && $item->include_children) {
-                    $query = $menuItem->descendants()->active()->with('template')->withCanonicalPath();
+                    $query = $menuItem->descendants()->active()->with('template')->withCanonicalPath()->ordered();
 
                     if ($item->max_depth) {
                         $query->withDepth()->having('depth', '<=', $item->max_depth);
