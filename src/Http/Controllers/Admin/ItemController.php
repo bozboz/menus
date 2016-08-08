@@ -5,7 +5,6 @@ namespace Bozboz\Menus\Http\Controllers\Admin;
 use Bozboz\Admin\Http\Controllers\ModelAdminController;
 use Bozboz\Admin\Reports\Actions\Permissions\IsValid;
 use Bozboz\Admin\Reports\Actions\Presenters\Link;
-use Bozboz\Admin\Reports\Actions\Presenters\Urls\Route;
 use Bozboz\Admin\Reports\NestedReport;
 use Bozboz\Menus\Items\ItemDecorator;
 use Bozboz\Menus\Menu;
@@ -64,7 +63,7 @@ class ItemController extends ModelAdminController
             ),
             $this->actions->custom(
                 new Link(
-                    new Route('admin.menus.index'),
+                    '\Bozboz\Menus\Http\Controllers\Admin\MenuController@index',
                     'Back to menus',
                     'fa fa-list',
                     ['class' => 'pull-right btn-default']
