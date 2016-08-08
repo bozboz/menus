@@ -22,6 +22,13 @@ class ItemDecorator extends ModelAdminDecorator
         $this->menus = $menus;
     }
 
+    public function getHeading($plural = false)
+    {
+        $heading = 'Menu Item';
+
+        return $plural? str_plural($heading) : $heading;
+    }
+
     public function getLabel($instance)
     {
         return $instance->name;
