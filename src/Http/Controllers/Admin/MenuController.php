@@ -45,7 +45,7 @@ class MenuController extends ModelAdminController
                     $this->getActionName('clearCache'),
                     'Clear Cache',
                     'fa fa-recycle',
-                    ['class' => 'btn-warning pull-right']
+                    ['class' => 'btn-warning pull-right', 'style' => 'margin-right: 15px;']
                 ),
                 new IsValid([$this->items, 'canEdit'])
             ),
@@ -65,5 +65,25 @@ class MenuController extends ModelAdminController
                 new IsValid([$this->items, 'canView'])
             ),
         ], parent::getRowActions());
+    }
+
+    protected function viewPermissions($stack)
+    {
+        $stack->add('view_menus');
+    }
+
+    protected function editPermissions($stack, $instance)
+    {
+        $stack->add('edit_menus', $instance);
+    }
+
+    protected function createPermissions($stack, $instance)
+    {
+        $stack->add('create_menus', $instance);
+    }
+
+    protected function deletePermissions($stack, $instance)
+    {
+        $stack->add('delete_menus', $instance);
     }
 }

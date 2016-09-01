@@ -87,4 +87,24 @@ class ItemController extends ModelAdminController
     {
         return '\Bozboz\Menus\Http\Controllers\Admin\MenuController@show';
     }
+
+    protected function viewPermissions($stack)
+    {
+        $stack->add('view_menus');
+    }
+
+    protected function editPermissions($stack, $instance)
+    {
+        $stack->add('edit_menus', $instance);
+    }
+
+    protected function createPermissions($stack, $instance)
+    {
+        $stack->add('create_menus', $instance);
+    }
+
+    protected function deletePermissions($stack, $instance)
+    {
+        $stack->add('delete_menus', $instance);
+    }
 }
