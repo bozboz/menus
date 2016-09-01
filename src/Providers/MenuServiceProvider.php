@@ -29,9 +29,8 @@ class MenuServiceProvider extends ServiceProvider
 
         $this->buildAdminMenu();
 
-        $permissions = $this->app['permission.handler'];
+        $this->registerPermissions();
 
-        require "$packageRoot/permissions.php";
         require "$packageRoot/helpers.php";
 
         if (! $this->app->routesAreCached()) {
@@ -66,5 +65,22 @@ class MenuServiceProvider extends ServiceProvider
                 $menu['Menus'] = $url->route('admin.menus.index');
             }
         });
+    }
+
+    protected function registerPermissions()
+    {
+        $this->app['permission.handler']->define([
+
+            'view_menus' => 'Bozboz\Permissions\Rules\ModelRule',
+            'create_menus' => 'Bozboz\Permissions\Rules\ModelRule',
+            'delete_menus' => 'Bozboz\Permissions\Rules\ModelRule',
+            'edit_menus' => 'Bozboz\Permissions\Rules\ModelRule',
+
+            'view_menu_items' => 'Bozboz\Permissions\Rules\ModelRule',
+            'create_menu_items' => 'Bozboz\Permissions\Rules\ModelRule',
+            'delete_menu_items' => 'Bozboz\Permissions\Rules\ModelRule',
+            'edit_menu_items' => 'Bozboz\Permissions\Rules\ModelRule',
+
+        ]);
     }
 }

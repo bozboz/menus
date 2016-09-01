@@ -90,21 +90,21 @@ class ItemController extends ModelAdminController
 
     protected function viewPermissions($stack)
     {
-        $stack->add('view_menus');
+        $stack->add('view_menu_items');
     }
 
     protected function editPermissions($stack, $instance)
     {
-        $stack->add('edit_menus', $instance);
+        $stack->add('edit_menu_items', $instance);
     }
 
     protected function createPermissions($stack, $instance)
     {
-        $stack->add('create_menus', $instance);
+        $stack->add('create_menu_items', $instance);
     }
 
     protected function deletePermissions($stack, $instance)
     {
-        $stack->add('delete_menus', $instance);
+        $stack->add('delete_menu_items', $instance);
     }
 }
