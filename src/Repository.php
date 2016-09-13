@@ -53,6 +53,11 @@ class Repository
                     $item->children = $item->children->sortBy($sortBy)->toTree();
                 }
 
+                if ($menuItem && $item->descendant_field) {
+                    $menuItem->injectValues();
+                    $item->children = $menuItem->{$item->descendant_field};
+                }
+
                 return $item;
             })->toTree();
 

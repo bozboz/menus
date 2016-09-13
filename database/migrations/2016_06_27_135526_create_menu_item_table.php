@@ -17,6 +17,7 @@ class CreateMenuItemTable extends Migration
             $table->unsignedInteger('menu_id');
             $table->unsignedInteger('entity_id')->nullable();
             $table->boolean('include_children');
+            $table->string('descendant_field')->nullable();
             $table->unsignedInteger('max_depth')->nullable();
             $table->text('name')->nullable();
             $table->text('url')->nullable();

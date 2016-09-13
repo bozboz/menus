@@ -55,6 +55,7 @@ class ItemDecorator extends ModelAdminDecorator
                 ]
             ),
             new CheckboxField('include_children'),
+            new TextField('descendant_field'),
             new TextField('max_depth'),
             new TextField('override_name'),
             new TextField('override_url'),
