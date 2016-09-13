@@ -22,7 +22,7 @@ class Item extends Model implements Sortable
         'override_name',
         'override_url',
         'include_children',
-        'child_field',
+        'descendant_field',
         'max_depth',
     ];
 
@@ -30,7 +30,7 @@ class Item extends Model implements Sortable
         'entity_id',
         'name',
         'url',
-        'child_field',
+        'descendant_field',
         'max_depth',
     ];
 
