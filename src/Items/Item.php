@@ -24,6 +24,8 @@ class Item extends Model implements Sortable
         'include_children',
         'descendant_field',
         'max_depth',
+        '_lft',
+        '_rgt',
     ];
 
     protected $nullable = [
@@ -65,7 +67,7 @@ class Item extends Model implements Sortable
         if (array_key_exists('url', $this->attributes) && $this->attributes['url'] != '') {
             return $this->attributes['url'];
         } else if ($this->entity) {
-            return url($this->entity->canonical_path ?: '/');
+            return '/' . $this->entity->canonical_path;
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace Bozboz\Menus;
 
+use Bozboz\Menus\Items\Item;
 use Bozboz\Menus\Menu;
 use Illuminate\Contracts\Cache\Repository as CacheContract;
 
@@ -35,16 +36,20 @@ class Repository
             $items = $menu->items->map(function($item) {
                 $menuItem = $item->entity;
 
-                if ($menuItem && $item->include_children) {
+                if ( ! $menuItem) {
+                    return $item;
+                }
+
+                if ($item->include_children) {
                     $query = $menuItem->descendants()->active()->with('template')->withCanonicalPath();
 
                     if ($item->max_depth) {
                         $query->withDepth()->having('depth', '<=', $item->max_depth);
                     }
-                    $item->children = $query->get()->filter(function($item) {
-                        return $item->template->type()->isVisible();
-                    })->transform(function($item) {
-                        $item->url = url($item->canonical_path);
+                    $item->children = $query->get()->filter(function($child) {
+                        return $child->template->type()->isVisible();
+                    })->map(function($item) {
+                        $item->url = '/' . $item->canonical_path;
                         return $item;
                     });
 
@@ -53,13 +58,15 @@ class Repository
                     $item->children = $item->children->sortBy($sortBy)->toTree();
                 }
 
-                if ($menuItem && $item->descendant_field) {
+                if ($item->descendant_field) {
                     $menuItem->injectValues();
                     $item->children = $menuItem->{$item->descendant_field};
                 }
 
                 return $item;
-            })->toTree();
+            })->toTree()->map(function($item) {
+                return $this->generateMenuItem($item);
+            });
 
             return $items;
         });
@@ -74,5 +81,16 @@ class Repository
     protected function getCacheKey($alias)
     {
         return "Bozboz\Menus|$alias";
+    }
+
+    protected function generateMenuItem($item)
+    {
+        return (object)[
+            'name' => $item->name,
+            'url' => $item->url,
+            'children' => $item->children->map(function($child) {
+                return $this->generateMenuItem($child);
+            }),
+        ];
     }
 }

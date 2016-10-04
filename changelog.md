@@ -1,5 +1,9 @@
 # Menus Changelog
 
+## Version 1.2.1 (2016-10-04)
+
+- Rework repo to return basic objects rather than entities
+
 ## Version 1.2.0 (2016-09-13)
 
 - Allow descendant menu items based on entity fields values as well as tree
