@@ -1,5 +1,9 @@
 # Menus Changelog
 
+## Version 1.2.2 (2016-10-05)
+
+- Add basic classes to default views
+
 ## Version 1.2.1 (2016-10-04)
 
 - Rework repo to return basic objects rather than entities
