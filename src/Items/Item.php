@@ -67,7 +67,7 @@ class Item extends Model implements Sortable
         if (array_key_exists('url', $this->attributes) && $this->attributes['url'] != '') {
             return $this->attributes['url'];
         } else if ($this->entity) {
-            return '/' . $this->entity->canonical_path;
+            return '/' . trim($this->entity->canonical_path, '/');
         }
     }
 

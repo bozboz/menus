@@ -49,7 +49,7 @@ class Repository
                     $item->children = $query->get()->filter(function($child) {
                         return $child->template->type()->isVisible();
                     })->map(function($item) {
-                        $item->url = '/' . $item->canonical_path;
+                        $item->url = '/' . trim($item->canonical_path, '/');
                         return $item;
                     });
 

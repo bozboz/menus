@@ -1,5 +1,9 @@
 # Menus Changelog
 
+## Version 1.2.3 (2016-11-02)
+
+- Fix url for homepage entity
+
 ## Version 1.2.2 (2016-10-05)
 
 - Add basic classes to default views
