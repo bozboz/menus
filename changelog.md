@@ -1,5 +1,9 @@
 # Menus Changelog
 
+## Version 1.2.4 (Future)
+
+- Move admin nav item to 'Config'
+
 ## Version 1.2.3 (2016-11-02)
 
 - Fix url for homepage entity

@@ -62,7 +62,7 @@ class MenuServiceProvider extends ServiceProvider
             $url = $this->app['url'];
 
             if ($menu->gate('view_menus')) {
-                $menu['Menus'] = $url->route('admin.menus.index');
+                $menu->appendToItem('Config', ['Navigation Menus' => 'admin.menus.index']);
             }
         });
     }
