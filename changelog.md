@@ -1,6 +1,6 @@
 # Menus Changelog
 
-## Version 1.2.4 (Future)
+## Version 1.2.4 (2017-01-26)
 
 - Move admin nav item to 'Config'
 
