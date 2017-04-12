@@ -1,5 +1,8 @@
 # Menus Changelog
 
+## Version 1.2.5 (Future)
+- Make `entityOptions` method on `ItemDecorator` protected
+
 ## Version 1.2.4 (2017-01-26)
 
 - Move admin nav item to 'Config'

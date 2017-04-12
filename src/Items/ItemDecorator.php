@@ -62,7 +62,7 @@ class ItemDecorator extends ModelAdminDecorator
         ];
     }
 
-    private function entityOptions()
+    protected function entityOptions()
     {
         return Entity::active()->orderBy('_lft')->with('template')->get()->filter(function($entity) {
             return $entity->template->type()->isVisible();
