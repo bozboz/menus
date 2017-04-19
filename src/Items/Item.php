@@ -94,4 +94,34 @@ class Item extends Model implements Sortable
             return $this->attributes['url'];
         }
     }
+
+    public function loadChildren()
+    {
+        $menuItem = $this->entity ?: $this;
+
+        if ($this->include_children) {
+            $query = $this->entity->descendants()->active()->with('template')->withCanonicalPath();
+
+            if ($this->max_depth) {
+                $query->withDepth()->having('depth', '<=', $this->max_depth);
+            }
+
+            $this->children = $query->get()->filter(function($child) {
+                return $child->template->type()->isVisible();
+            })->each(function($item) {
+                $item->url = '/' . $item->canonical_path;
+            })->sortBy(
+                $this->entity->template->type()->getEntity()->sortBy()
+            )->toTree();
+        }
+
+        if ($this->descendant_field) {
+            $this->entity->injectValues();
+            if (in_array($this->descendant_field, $this->entity->getAttributes())) {
+                $this->children = $this->entity->{$this->descendant_field};
+            } else {
+                $this->children = collect();
+            }
+        }
+    }
 }
