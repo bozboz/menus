@@ -71,12 +71,12 @@ class MenuServiceProvider extends ServiceProvider
     {
         $this->app['permission.handler']->define([
 
-            'view_menus' => 'Bozboz\Permissions\Rules\ModelRule',
+            'view_menus' => 'Bozboz\Permissions\Rules\GlobalRule',
             'create_menus' => 'Bozboz\Permissions\Rules\ModelRule',
             'delete_menus' => 'Bozboz\Permissions\Rules\ModelRule',
             'edit_menus' => 'Bozboz\Permissions\Rules\ModelRule',
 
-            'view_menu_items' => 'Bozboz\Permissions\Rules\ModelRule',
+            'view_menu_items' => 'Bozboz\Permissions\Rules\GlobalRule',
             'create_menu_items' => 'Bozboz\Permissions\Rules\ModelRule',
             'delete_menu_items' => 'Bozboz\Permissions\Rules\ModelRule',
             'edit_menu_items' => 'Bozboz\Permissions\Rules\ModelRule',
