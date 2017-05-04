@@ -1,6 +1,6 @@
 # Menus Changelog
 
-## Version 1.2.5 (Future)
+## Version 1.2.5 (2017-05-04)
 - Make `entityOptions` method on `ItemDecorator` protected
 
 ## Version 1.2.4 (2017-01-26)
