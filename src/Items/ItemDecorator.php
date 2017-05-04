@@ -48,7 +48,7 @@ class ItemDecorator extends ModelAdminDecorator
             new HiddenField('menu_id'),
             new HiddenField('menuable_type', Entity::class),
             new TreeSelectField(
-                $this->entityOptions(),
+                $this->entityOptions($instance),
                 [
                     'name' => 'entity_id',
                     'class' => 'select2'
@@ -62,7 +62,7 @@ class ItemDecorator extends ModelAdminDecorator
         ];
     }
 
-    protected function entityOptions()
+    protected function entityOptions($instance)
     {
         return Entity::active()->orderBy('_lft')->with('template')->get()->filter(function($entity) {
             return $entity->template->type()->isVisible();

@@ -1,5 +1,8 @@
 # Menus Changelog
 
+## Version 1.2.6 (2017-05-04)
+- Add $instance as arg to getEntityOptions method
+
 ## Version 1.2.5 (2017-05-04)
 - Make `entityOptions` method on `ItemDecorator` protected
 
