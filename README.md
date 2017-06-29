@@ -4,6 +4,7 @@
 
 - `composer require bozboz/menus`
 - Add `Bozboz\Menus\Providers\MenuServiceProvider::class,` to app.php
+- `php artisan vendor:publish && php artisan migrate`
 
 ## Usage
 
