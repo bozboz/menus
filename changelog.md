@@ -1,5 +1,8 @@
 # Menus Changelog
 
+## Version 1.3.0 (2017-07-05)
+- Add active/has-children classes to menu items
+
 ## Version 1.2.6 (2017-05-04)
 - Add $instance as arg to getEntityOptions method
 
