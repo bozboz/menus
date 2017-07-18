@@ -116,12 +116,8 @@ class Item extends Model implements Sortable
         }
 
         if ($this->descendant_field) {
-            $this->entity->injectValues();
-            if (in_array($this->descendant_field, $this->entity->getAttributes())) {
-                $this->children = $this->entity->{$this->descendant_field};
-            } else {
-                $this->children = collect();
-            }
+            $this->entity->loadFields($this->descendant_field);
+            $this->children = $this->entity->{$this->descendant_field} ?: collect();
         }
     }
 }
