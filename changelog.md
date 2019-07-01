@@ -1,5 +1,8 @@
 # Menus Changelog
 
+## Version 1.3.2 (2019-07-01)
+- Prevent errors when entities exist without defined types
+
 ## Version 1.3.1 (2017-07-18)
 - Fix menu item descendant field feature
 

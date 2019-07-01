@@ -2,15 +2,16 @@
 
 namespace Bozboz\Menus\Items;
 
-use Bozboz\Admin\Base\ModelAdminDecorator;
-use Bozboz\Admin\Fields\CheckboxField;
-use Bozboz\Admin\Fields\HiddenField;
-use Bozboz\Admin\Fields\TextField;
-use Bozboz\Admin\Fields\TreeSelectField;
-use Bozboz\Admin\Reports\Filters\HiddenFilter;
-use Bozboz\Admin\Reports\Filters\RelationFilter;
 use Bozboz\Jam\Entities\Entity;
 use Bozboz\Menus\MenuDecorator;
+use Bozboz\Admin\Fields\TextField;
+use Bozboz\Jam\Templates\Template;
+use Bozboz\Admin\Fields\HiddenField;
+use Bozboz\Admin\Fields\CheckboxField;
+use Bozboz\Admin\Fields\TreeSelectField;
+use Bozboz\Admin\Base\ModelAdminDecorator;
+use Bozboz\Admin\Reports\Filters\HiddenFilter;
+use Bozboz\Admin\Reports\Filters\RelationFilter;
 
 class ItemDecorator extends ModelAdminDecorator
 {
@@ -64,9 +65,15 @@ class ItemDecorator extends ModelAdminDecorator
 
     protected function entityOptions($instance)
     {
-        return Entity::active()->orderBy('_lft')->with('template')->get()->filter(function($entity) {
-            return $entity->template->type()->isVisible();
-        });
+        return Entity::active()->orderBy('_lft')
+            ->whereIn(
+                'template_id',
+                Template::whereIn('type_alias', app('EntityMapper')->getAll()->keys())->pluck('id')
+            )
+            ->with('template')->get()
+            ->filter(function($entity) {
+                return $entity->template->type()->isVisible();
+            });
     }
 
     public function getListingFilters()
